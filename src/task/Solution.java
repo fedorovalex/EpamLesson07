@@ -6,18 +6,18 @@ public class Solution {
 
     public static <T> T counting(List<? extends T> circle) {
 
-        if (circle == null ||circle.isEmpty()) {
+        if (circle == null || circle.isEmpty()) {
             return null;
         }
+        Iterator<T> iterator = new AlwaysSecondCyclicIterator<T>(new ArrayList<>(circle));
 
-        List<T> circleCopy = new ArrayList<>(circle);
+        T selected = null;
 
-        int numberRetired = 0;
-        while (circleCopy.size() > 1) {
-            numberRetired = (numberRetired + 1) % circleCopy.size();
-            circleCopy.remove(numberRetired);
+        while (iterator.hasNext()) {
+            selected = iterator.next();
+            iterator.remove();
         }
-        return circleCopy.get(0);
+        return selected;
     }
 
 
